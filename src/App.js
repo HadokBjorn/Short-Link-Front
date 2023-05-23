@@ -3,7 +3,7 @@ import styled from "styled-components"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import UserContext from "./contexts/UserContext"
-import HomeSignedPage from "./pages/HomeSignedPage copy"
+import HomeSignedPage from "./pages/HomeSignedPage"
 import RankingPage from "./pages/RankingPage"
 
 export default function App() {

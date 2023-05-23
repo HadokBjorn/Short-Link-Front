@@ -21,7 +21,7 @@ export default function SignInPage() {
     const url = `${process.env.REACT_APP_API_URL}/signin`;
     axios.post(url, form)
     .then((res)=>{
-      localStorage.setItem("token",res.data)
+      localStorage.setItem("token",res.data.token)
       setLoading(false)
       navigate("/home")
     })
@@ -54,7 +54,7 @@ export default function SignInPage() {
       <form onSubmit={login}>
         <input placeholder="E-mail" type="email" ref={emailRef}/>
         <input placeholder="Senha" type="password" ref={passwordRef}
-        autocomplete="new-password" />
+        autoComplete="new-password" />
         <button type="submit" >Entrar</button>
       </form>
     </SingInContainer>

@@ -1,12 +1,21 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-export default function HeaderSigned(){
+export default function HeaderSigned({userName}){
     return(
         <HeaderContainer>
-            <p>Seja bem-vindo(a), Pessoa!</p>
+            <p>Seja bem-vindo(a), {userName}!</p>
             <div>
-                <p>Home</p>
-                <p>Ranking</p>
+                <Link to={"/home"}>
+                    <p>Home</p>
+                </Link>
+                <Link to={"/"}>
+                    <p>Ranking</p>
+                </Link>
+
                 <p>Sair</p>
+                
+                
+                
             </div>
         </HeaderContainer>
     )
@@ -22,7 +31,14 @@ const HeaderContainer = styled.header`
         display: flex;
         align-items: center;
         gap: 22px;
-        p{color: #000;}
+        p{
+            color: #000;
+        }
+        a{
+            text-decoration: none;
+            padding-top: 0;
+            
+        }
     }
     p{
         font-style: normal;
