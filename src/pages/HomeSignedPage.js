@@ -23,6 +23,7 @@ export default function HomeSignedPage() {
       .then((res)=>{
         setLoading(false)
         setLinks(res.data)
+        localStorage.setItem("name", res.data.name)
       })
       .catch((err)=>{
         setLoading(false)
@@ -32,19 +33,27 @@ export default function HomeSignedPage() {
       })
   },[token, navigate, updatePage])
 
-  function createShortLink(e){
-    e.preventDefault();
-    form.url = linkRef.current.value
+  function request(){
     const url = `${process.env.REACT_APP_API_URL}/urls/shorten`;
     const config = {headers: {Authorization: `Bearer ${token}`}}
     axios.post(url,form,config)
     .then((res)=>{
-      console.log(res)
       setUpdatePage(res.data.shortUrl)
     })
     .catch((err)=>{
       console.log(err)
     })
+  }
+
+  function createShortLink(e){
+    e.preventDefault();
+    form.url = linkRef.current.value
+    request();
+  }
+
+  function redirect (shortUrl){
+    const url = `${process.env.REACT_APP_API_URL}/urls/open/${shortUrl}`;
+    window.open(url)
   }
   
   if(loading){
@@ -56,7 +65,7 @@ export default function HomeSignedPage() {
   }
   return (
     <HomeSignedContainer>
-      <HeaderSigned userName={links?links.name:"Pessoa"}/>
+      <HeaderSigned />
       <ShortlyLogo />
         
       <form onSubmit={createShortLink}>
@@ -68,7 +77,7 @@ export default function HomeSignedPage() {
           <LinkCard key={i}>
             <div>
               <p>{link.url}</p>
-              <p>{link.shortUrl}</p>
+              <p id="short-url" onClick={()=>redirect(link.shortUrl)}>{link.shortUrl}</p>
               <p>Quantidade de Visitantes: {link.visitCount}</p>
             </div>
             <button>
@@ -145,6 +154,13 @@ const LinkCard = styled.article`
   border: 1px solid rgba(120, 177, 89, 0.25);
   border-radius: 12px;
     div{
+      #short-url{
+        cursor: pointer;
+      }
+      #short-url:hover{
+        color: #fff;
+        text-decoration: underline dashed;
+      }
       padding: 21px;
       display: flex;
       align-items: center;
