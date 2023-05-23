@@ -11,7 +11,6 @@ export default function RankingPage() {
   const [usersRanking, setUsersRanking] = useState(null)
   const token = localStorage.getItem("token")
 
-
   useEffect(()=>{
     setLoading(true)
     axios.get(`${process.env.REACT_APP_API_URL}/ranking`)

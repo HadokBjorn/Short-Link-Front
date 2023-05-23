@@ -15,8 +15,10 @@ export default function HomeSignedPage() {
   const token = localStorage.getItem("token")
   const linkRef = useRef();
 
+
   useEffect(()=>{
     setLoading(true)
+
     const url = `${process.env.REACT_APP_API_URL}/users/me`;
     const config = {headers: {Authorization: `Bearer ${token}`}}
     axios.get(url, config)
@@ -24,14 +26,14 @@ export default function HomeSignedPage() {
         setLoading(false)
         setLinks(res.data)
         localStorage.setItem("name", res.data.name)
+        console.log(res.data)
       })
       .catch((err)=>{
         setLoading(false)
         navigate("/Login")
         console.log(err)
-        localStorage.clear()
       })
-  },[token, navigate, updatePage])
+  },[token, navigate, updatePage,])
 
   function request(){
     const url = `${process.env.REACT_APP_API_URL}/urls/shorten`;
@@ -54,6 +56,14 @@ export default function HomeSignedPage() {
   function redirect (shortUrl){
     const url = `${process.env.REACT_APP_API_URL}/urls/open/${shortUrl}`;
     window.open(url)
+  }
+
+  function deleteUrl(id){
+    const url = `${process.env.REACT_APP_API_URL}/urls/${id}`;
+    const config = {headers: {Authorization: `Bearer ${token}`}}
+    axios.delete(url, config)
+      .then((res)=>alert(res.data))
+      .catch((err)=>console.log(err.data.message))
   }
   
   if(loading){
@@ -80,7 +90,7 @@ export default function HomeSignedPage() {
               <p id="short-url" onClick={()=>redirect(link.shortUrl)}>{link.shortUrl}</p>
               <p>Quantidade de Visitantes: {link.visitCount}</p>
             </div>
-            <button>
+            <button onClick={()=>deleteUrl(link.id)}>
               <FaTrashAlt color="#EA4F4F" size={26}/>
             </button>
           </LinkCard>

@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
       position: relative;
       left: -32px;
       border-radius: 50%;
-      color: #fff;
+      color: #000;
       background: currentColor;
       box-shadow: 32px 0 , -32px 0 ,  64px 0;
     }
