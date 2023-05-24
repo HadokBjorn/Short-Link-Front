@@ -78,7 +78,7 @@ export default function HomeSignedPage() {
         
       <form onSubmit={createShortLink}>
         <article id="insert-link">
-          <input placeholder="Links que cabem no bolso" ref={linkRef}/>
+          <input placeholder="Links que cabem no bolso" type="url" ref={linkRef}/>
           <button type="submit">Encurtar link</button>
         </article>
         {links.shortenedUrls?.map((link,i)=>(
