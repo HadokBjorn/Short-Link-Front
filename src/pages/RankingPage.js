@@ -17,7 +17,6 @@ export default function RankingPage() {
       .then((res)=>{
         setLoading(false)
         setUsersRanking(res.data)
-        console.log(token)
       })
       .catch((err)=>{
         setLoading(false)
@@ -41,14 +40,9 @@ export default function RankingPage() {
             Ranking
         </h2>
       <form>
-        {usersRanking?.map((user, i)=>(
+        {usersRanking?usersRanking.map((user, i)=>(
           <p key={i}>{i+1}. {user.name} - {user.linksCount} links - {user.visitCount} visualizações</p>
-        ))}
-        
-        {!usersRanking?
-          <p> Seja o primeiro do Ranking adicionando um Link!</p>:
-          ""
-        }
+        )):<p> Seja o primeiro do Ranking adicionando um Link!</p>}
       </form>
       <h2>Crie sua conta para usar nosso serviço!</h2>
 
