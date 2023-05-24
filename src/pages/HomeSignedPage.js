@@ -5,10 +5,12 @@ import { FaTrashAlt } from "react-icons/fa"
 import HeaderSigned from "../components/HeaderSigned"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import {ThreeDots} from "react-loader-spinner"
 
 export default function HomeSignedPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [links, setLinks] = useState("");
   const [updatePage, setUpdatePage] = useState("");
   const form = {url: ""}
@@ -41,6 +43,7 @@ export default function HomeSignedPage() {
       setUpdatePage(res.data.shortUrl)
     })
     .catch((err)=>{
+      setLoading(false)
       console.log(err)
     })
   }
@@ -48,6 +51,7 @@ export default function HomeSignedPage() {
   function createShortLink(e){
     e.preventDefault();
     form.url = linkRef.current.value
+    setLoading(true)
     request();
   }
 
@@ -57,11 +61,19 @@ export default function HomeSignedPage() {
   }
 
   function deleteUrl(id){
+    setDeleting(true)
     const url = `${process.env.REACT_APP_API_URL}/urls/${id}`;
     const config = {headers: {Authorization: `Bearer ${token}`}}
     axios.delete(url, config)
-      .then((res)=>alert(res.data))
-      .catch((err)=>console.log(err.data.message))
+      .then(()=>{
+        setDeleting(false)
+        alert("Link deletado com sucesso!")
+        setUpdatePage("deleted")
+      })
+      .catch((err)=>{
+        setDeleting(false)
+        alert(err.data.message)
+      })
   }
   
   if(loading){
@@ -89,7 +101,14 @@ export default function HomeSignedPage() {
               <p>Quantidade de Visitantes: {link.visitCount}</p>
             </div>
             <button onClick={()=>deleteUrl(link.id)}>
-              <FaTrashAlt color="#EA4F4F" size={26}/>
+              {deleting?
+              <ThreeDots 
+              height="80" 
+              width="80" 
+              radius="10"
+              color="#EA4F4F" 
+               />:
+              <FaTrashAlt color="#EA4F4F" size={26}/>}
             </button>
           </LinkCard>
         ))}
@@ -186,6 +205,7 @@ const LinkCard = styled.article`
     }
     button{
       width: 10%;
+      height: inherit;
       background: #FFFFFF;
       box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
       border-radius: 0px 12px 12px 0px;
@@ -195,5 +215,14 @@ const LinkCard = styled.article`
       font-size: 14px;
       line-height: 18px;
       color: #fff;
+      div{
+        width: 100%;
+        height: -webkit-fill-available;
+        max-height: 20px;
+        border: none;
+        padding: 0;
+        border-radius: 0;
+        background-color: transparent;
+      }
     }
 `
