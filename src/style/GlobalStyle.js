@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
       position: relative;
       left: -32px;
       border-radius: 50%;
-      color: #000;
+      color: #5D9040;
       background: currentColor;
       box-shadow: 32px 0 , -32px 0 ,  64px 0;
     }
@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
       width: 20px;
       height: 20px;
       border-radius: 10px;
-      background:#fff;
+      background:#5D9040;
       animation: move 3s linear infinite alternate;
     }
 

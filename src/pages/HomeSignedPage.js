@@ -25,8 +25,6 @@ export default function HomeSignedPage() {
       .then((res)=>{
         setLoading(false)
         setLinks(res.data)
-        localStorage.setItem("name", res.data.name)
-        console.log(res.data)
       })
       .catch((err)=>{
         setLoading(false)

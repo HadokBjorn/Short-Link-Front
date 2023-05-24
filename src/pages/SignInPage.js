@@ -22,6 +22,7 @@ export default function SignInPage() {
     axios.post(url, form)
     .then((res)=>{
       localStorage.setItem("token",res.data.token)
+      localStorage.setItem("name", res.data.name)
       setLoading(false)
       navigate("/home")
     })
