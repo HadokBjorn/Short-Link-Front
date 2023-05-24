@@ -6,6 +6,9 @@ const GlobalStyle = createGlobalStyle`
         font-style: normal;
         font-weight: 400;
     }
+    body::-webkit-scrollbar{
+      display: none;
+    }
     button {
         outline: none;
         border: none;

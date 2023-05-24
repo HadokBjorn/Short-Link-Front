@@ -14,8 +14,8 @@ export default function HeaderSigned(){
             .then((res)=>{
                 localStorage.clear();
                 alert(res.data)
-                window.location.reload(false)
                 navigate("/")
+                window.location.reload(false)
             })
             .catch((err)=>{
                 alert(err.data.message)
